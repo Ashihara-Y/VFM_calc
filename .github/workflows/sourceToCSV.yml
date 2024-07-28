@@ -25,12 +25,13 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: Check out repository code
-        run: actions/checkout@v4
-
-      # Runs pip install for requirements
-      - name: run pip install requirements.txt
-        run: pip install -Ur requirements.txt
+      # Setup python 3.12
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12' 
+      
+      - run: pip install -Ur requirements.txt
 
       # Runs playwright for getting Chromium, etc
       - name: Run playwright install
@@ -47,3 +48,5 @@ jobs:
       # Runs python code for getting BOJ datas
       - name: Run BOJ_ExpInflRate_down
         run: python BOJ_ExpInflRate_down.py
+
+     
