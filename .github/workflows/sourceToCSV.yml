@@ -32,8 +32,18 @@ jobs:
       - name: run pip install requirements.txt
         run: pip install -Ur requirements.txt
 
-      # Runs playwright for getting Chromium, etc.
+      # Runs playwright for getting Chromium, etc
       - name: Run playwright install
         run: playwright install
-          echo Add other actions to build,
-          echo test, and deploy your project.
+
+      # Runs python code for getting JGB rates
+      - name: Run jgb_rates
+        run: python jgb_rates.py
+
+      # Runs python code for getting JRB rates
+      - name: Run jrb_rates
+        run: python jrb_rates.py
+
+      # Runs python code for getting BOJ datas
+      - name: Run BOJ_ExpInflRate_down
+        run: python BOJ_ExpInflRate_down.py
