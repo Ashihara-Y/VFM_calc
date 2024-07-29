@@ -1,7 +1,7 @@
 import sys
 sys.dont_write_bytecode = True
 import requests
-import fitz
+import pymupdf
 import pandas as pd
 import numpy as np
 
@@ -12,7 +12,7 @@ def main():
     myfile.write(res.content)
     pdf = open('./JRB.pdf', "rb")
 
-    doc = fitz.open('./JRB.pdf', filetype="pdf")
+    doc = pymupdf.open('./JRB.pdf', filetype="pdf")
     page = doc[0]
     tabs = page.find_tables()
     tab = tabs[0]
