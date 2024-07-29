@@ -49,4 +49,7 @@ jobs:
       - name: Run BOJ_ExpInflRate_down
         run: python BOJ_ExpInflRate_down.py
 
+      - uses: actions/download-artifact@v4
+        with:
+          name: my-artifact
      
