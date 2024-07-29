@@ -49,6 +49,14 @@ jobs:
       - name: Run BOJ_ExpInflRate_down
         run: python BOJ_ExpInflRate_down.py
 
+      # Upload artifacts
+      - name: Archive artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: my-artifact
+          path: '*.csv'
+            
+      # Download artifacts
       - uses: actions/download-artifact@v4
         with:
           name: my-artifact
