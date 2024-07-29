@@ -12,7 +12,7 @@ def main():
     myfile.write(res.content)
     pdf = open('./JRB.pdf', "rb")
 
-    doc = fitz.open('JRB.pdf', filetype="pdf")
+    doc = fitz.open('./JRB.pdf', filetype="pdf")
     page = doc[0]
     tabs = page.find_tables()
     tab = tabs[0]
