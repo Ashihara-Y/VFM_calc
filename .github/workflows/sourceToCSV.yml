@@ -82,6 +82,7 @@ jobs:
           path: |
             *.csv
             !jgbcm_all.csv
+          overwrite: true
             
       # Download artifacts
       #- name: Download artifavts
