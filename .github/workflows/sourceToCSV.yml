@@ -53,13 +53,11 @@ jobs:
       - name: Archive artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: my-artifact
           path: |
             *.csv
             !jgbcm_all.csv
             
       # Download artifacts
-      - uses: actions/download-artifact@v4
-        with:
-          name: my-artifact
+      - name: Download artifavts
+        uses: actions/download-artifact@v4
      
