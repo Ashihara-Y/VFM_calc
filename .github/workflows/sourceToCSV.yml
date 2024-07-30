@@ -34,9 +34,33 @@ jobs:
       
       - run: pip install -Ur requirements.txt
 
-      # Runs playwright for getting Chromium, etc
-      - name: Run playwright install
+      - name: Get Playwright Version For Browser Cache Key
+        id: get-playwright-version
+        run: |
+          echo "playwright-version=$(npx playwright --version | sed 's/ //g')" >> $GITHUB_OUTPUT
+        shell: bash
+
+      - name: Restore Cache Playwright Browser
+        id: restore-cache-playwright-chromium
+        uses: actions/cache/restore@v4
+        with:
+          path: /home/runner/.cache/ms-playwright
+          key: playwright-chromium-${{ steps.get-playwright-version.outputs.playwright-version }}
+
+      - name: Install Playwright Browsers
         run: playwright install chromium
+        if: ${{ steps.restore-cache-playwright-chromium.outputs.cache-hit != 'true' }}
+
+      - name: Save Cache – Playwright Browser
+        uses: actions/cache@v4
+        id: save-cache-playwright-chromium
+        with:
+          path: /home/runner/.cache/ms-playwright
+          key: ${{ steps.restore-cache-playwright-chromium.outputs.cache-primary-key }}
+
+      # Runs playwright for getting Chromium, etc
+      #- name: Run playwright install
+      #  run: playwright install chromium
 
       # Runs python code for getting JGB rates
       - name: Run jgb_rates
