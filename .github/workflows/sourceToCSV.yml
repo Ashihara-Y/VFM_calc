@@ -31,13 +31,14 @@ jobs:
         with:
           python-version: '3.12' 
           cache: 'pip' # caching pip dependencies
-      
+
+      - run: pip install -U pip
       - run: pip install -Ur requirements.txt
 
       - name: Get Playwright Version For Browser Cache Key
         id: get-playwright-version
         run: |
-          echo "playwright-version=$(npx playwright --version | sed 's/ //g')" >> $GITHUB_OUTPUT
+          echo "playwright-version=$(playwright --version | sed 's/ //g')" >> $GITHUB_OUTPUT
         shell: bash
 
       - name: Restore Cache Playwright Browser
