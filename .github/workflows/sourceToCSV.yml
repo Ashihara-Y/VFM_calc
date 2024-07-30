@@ -54,7 +54,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: my-artifact
-          path: '*.csv'
+          path: |
+            '*.csv'
+            !'jgbcm_all.csv'
             
       # Download artifacts
       - uses: actions/download-artifact@v4
