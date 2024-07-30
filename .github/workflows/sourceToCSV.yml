@@ -84,11 +84,12 @@ jobs:
             !jgbcm_all.csv
             
       # Download artifacts
-      - name: Download artifavts
-        uses: actions/download-artifact@v4
-        with:
-          path: artifacts
+      #- name: Download artifavts
+      #  uses: actions/download-artifact@v4
+      #  with:
+      #    path: artifacts
 
+      # Push uploaded artifacts
       - name: Push uploaded artifacts
         run: |
           date > generated.txt
