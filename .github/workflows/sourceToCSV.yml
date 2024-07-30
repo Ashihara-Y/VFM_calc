@@ -30,12 +30,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12' 
+          cache: 'pip' # caching pip dependencies
       
       - run: pip install -Ur requirements.txt
 
       # Runs playwright for getting Chromium, etc
       - name: Run playwright install
-        run: playwright install
+        run: playwright install chromium
 
       # Runs python code for getting JGB rates
       - name: Run jgb_rates
