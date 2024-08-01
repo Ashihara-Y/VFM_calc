@@ -79,13 +79,13 @@ jobs:
         run: python BOJ_ExpInflRate_down.py
 
       # Upload artifacts
-      - name: Archive artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          path: |
-            *.csv
-            !jgbcm_all.csv
-          overwrite: true
+      #- name: Archive artifacts
+      #  uses: actions/upload-artifact@v4
+      #  with:
+      #    path: |
+      #      *.csv
+      #      !jgbcm_all.csv
+      #    overwrite: true
             
       # Download artifacts
       #- name: Download artifavts
@@ -97,9 +97,10 @@ jobs:
       - name: Push uploaded artifacts
         run: |
           date > generated.txt
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin https://github-actions:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add BOJ_ExpInflRate_down.csv JGB_rates.csv JRB_rates.csv generated.txt 
           git commit -m ":robot: generated"
-          git push
+          git push origin main
      
