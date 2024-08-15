@@ -5,9 +5,14 @@ on:
 
   workflow_dispatch:
 
-  jobs:
-    copy-CSV:
-      runs-on: ubuntu-latest
-
-      steps:
-        - uses: actions/checkout@v4
+jobs:
+  copy-CSV:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          id: ${{secrets.APP_ID}}
+          private_key: ${{secrets.PRIVATE_KEY}}
+          repositories: <target-repo>
+      - uses: actions/checkout@v4
