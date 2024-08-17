@@ -23,7 +23,7 @@ jobs:
       - name: Commit CSV
         run: |
           echo "CURRENT_DATETIME"=$(date + '%Y-%m-%d %H:%M:%S')>>$GITHUB_ENV
-          git remote set-url origin https://github-actions:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git remote set-url origin https://github-actions:${{ secrets.GITHUB_TOKEN }}@github.com/Ashihara-Y/VFMcalcProj.git
           git config --local user.email ${{ env.GITHUB_MAIL }}
           git config --local user.name ${{ env.GITHUB_NAME }}
           git add BOJ_ExpInflRate_down.csv JGB_rates.csv JRB_rates.csv
