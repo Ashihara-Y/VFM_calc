@@ -26,7 +26,10 @@ jobs:
         with:
           app-id: ${{ vars.APP_ID }}
           private-key: ${{ secrets.PRIVATE_KEY }}
-      - name: check out code
+      - name: check out code of current repo
+        uses: actions/checkout@v4
+        
+      - name: check out code of remote repo
         uses: actions/checkout@v4
         with:
           repository: Ashihara-Y/VFMcalcProj
