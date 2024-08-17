@@ -2,17 +2,30 @@ name: CSV2Proj
 on:
   push:
     branches: ["main"]
+    paths:
+      - BOJ_ExpInflRate_down.csv
+      - JGB_rates.csv
+      - JRB_rates.csv
 
   workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  GITHUB_MAIL: 41898282+github-actions[bot]@users.noreply.github.com
+  GITHUB_NAME: github-actions[bot]
 
 jobs:
   copy-CSV:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/create-github-app-token@v1
-        id: app-token
-        with:
-          id: ${{secrets.APP_ID}}
-          private_key: ${{secrets.PRIVATE_KEY}}
-          repositories: <target-repo>
-      - uses: actions/checkout@v4
+      - name: Commit CSV
+        run: |
+          echo "CURRENT_DATETIME"=$(date + '%Y-%m-%d %H:%M:%S')>>$GITHUB_ENV
+          git remote set-url origin https://github-actions:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git config --local user.email ${{ env.GITHUB_MAIL }}
+          git config --local user.name ${{ env.GITHUB_NAME }}
+          git add BOJ_ExpInflRate_down.csv JGB_rates.csv JRB_rates.csv
+          git commit -m ":robot: CSV updated at:{{ env.CURRENT_DATETIME }}"
+          git push origin build
