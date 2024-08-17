@@ -29,13 +29,6 @@ jobs:
       - name: check out code of current repo
         uses: actions/checkout@v4
         
-      - name: check out code of remote repo
-        uses: actions/checkout@v4
-        with:
-          repository: Ashihara-Y/VFMcalcProj
-          token: ${{ steps.app-token.outputs.token }}
-          ref: build
-        
       - name: Commit CSV
         run: |
           echo "CURRENT_DATETIME"=$(date)>>$GITHUB_ENV
@@ -44,4 +37,4 @@ jobs:
           git config --local user.name ${{ env.GITHUB_NAME }}
           git add BOJ_ExpInflRate_down.csv JGB_rates.csv JRB_rates.csv
           git commit -m ":robot: CSV updated at:{{ env.CURRENT_DATETIME }}"
-          git push origin build
+          git push -u origin build
