@@ -29,7 +29,7 @@ jobs:
       - name: check out code
         uses: actions/checkout@v4
         with:
-          repository: Ashihara-Y/VFNcalcProj
+          repository: Ashihara-Y/VFMcalcProj
           token: ${{ steps.app-token.outputs.token }}
           ref: build
         
