@@ -21,6 +21,9 @@ jobs:
   copy-CSV:
     runs-on: ubuntu-latest
     steps:
+      - name: check out code
+        uses: actions/checkout@v4
+        
       - name: Commit CSV
         run: |
           echo "CURRENT_DATETIME"=$(date)>>$GITHUB_ENV
