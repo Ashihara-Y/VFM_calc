@@ -15,6 +15,7 @@ permissions:
 env:
   GITHUB_MAIL: 41898282+github-actions[bot]@users.noreply.github.com
   GITHUB_NAME: github-actions[bot]
+  REMOTE_REPO_URL: https://
 
 jobs:
   copy-CSV:
@@ -22,8 +23,8 @@ jobs:
     steps:
       - name: Commit CSV
         run: |
-          echo "CURRENT_DATETIME"=$(date + '%Y-%m-%d %H:%M:%S')>>$GITHUB_ENV
-          git remote set-url origin https://github-actions:${{ secrets.GITHUB_TOKEN }}@github.com/Ashihara-Y/VFMcalcProj.git
+          echo "CURRENT_DATETIME"=$(date)>>$GITHUB_ENV
+          git remote set-url origin https://github.com/Ashihara-Y/VFMcalcProj.git
           git config --local user.email ${{ env.GITHUB_MAIL }}
           git config --local user.name ${{ env.GITHUB_NAME }}
           git add BOJ_ExpInflRate_down.csv JGB_rates.csv JRB_rates.csv
