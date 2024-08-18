@@ -26,9 +26,17 @@ jobs:
         with:
           app-id: ${{ vars.APP_ID }}
           private-key: ${{ secrets.PRIVATE_KEY }}
+
       - name: check out code of current repo
         uses: actions/checkout@v4
-        
+        with:
+          fetch-depth: 0
+
+      - name: check out code of remote repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
       - name: Commit CSV
         run: |
           echo "CURRENT_DATETIME"=$(date)>>$GITHUB_ENV
@@ -36,5 +44,5 @@ jobs:
           git config --local user.email ${{ env.GITHUB_MAIL }}
           git config --local user.name ${{ env.GITHUB_NAME }}
           git add BOJ_ExpInflRate_down.csv JGB_rates.csv JRB_rates.csv
-          git commit -m ":robot: CSV updated at:{{ env.CURRENT_DATETIME }}"
-          git push -u origin build
+          git commit -m ":robot: CSV updated at:{{ env.CURRENT_DATETIME }}" || echo "No change to commit."
+          git push -u --force-with-lease --force-if-includes origin build 
