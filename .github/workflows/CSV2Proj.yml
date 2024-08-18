@@ -36,6 +36,9 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          repository: Ashihara-Y/VFMcalcProj
+          token: ${{ steps.app-token.outputs.token }}
+          ref: build
           
       - name: Commit CSV
         run: |
