@@ -46,8 +46,8 @@ jobs:
         run: |
           echo "CURRENT_DATETIME"=$(date)>>$GITHUB_ENV
           git remote set-url origin ${{ env.REMOTE_REPO_URL }}
-          git config --local user.email ${{ env.GITHUB_MAIL }}
-          git config --local user.name ${{ env.GITHUB_NAME }}
+          git config --global user.email ${{ env.GITHUB_MAIL }}
+          git config --global user.name ${{ env.GITHUB_NAME }}
           git add BOJ_ExpInflRate_down.csv JGB_rates.csv JRB_rates.csv
           git commit -m ":robot: CSV updated at:{{ env.CURRENT_DATETIME }}" || echo "No change to commit."
           git push -u --force-with-lease --force-if-includes origin build 
