@@ -11,6 +11,8 @@ on:
 
 permissions:
   contents: write
+  actions: write
+  checks: write
 
 env:
   GITHUB_MAIL: 41898282+github-actions[bot]@users.noreply.github.com
