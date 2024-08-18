@@ -15,8 +15,8 @@ permissions:
   checks: write
 
 env:
-  GITHUB_MAIL: 41898282+github-actions[bot]@users.noreply.github.com
-  GITHUB_NAME: github-actions[bot]
+  GITHUB_MAIL: yoshihiro.ashihara@gmail.com
+  GITHUB_NAME: Ashihara-Y
   REMOTE_REPO_URL: https://github.com/Ashihara-Y/VFMcalcProj.git
 
 jobs:
@@ -46,8 +46,8 @@ jobs:
         run: |
           echo "CURRENT_DATETIME"=$(date)>>$GITHUB_ENV
           git remote set-url origin ${{ env.REMOTE_REPO_URL }}
-          git config --local user.email yoshihiro.ashihara@gmail.com
-          git config --local user.name Ashihara-Y
+          git config --local user.email ${{ env.GITHUB_MAIL }}
+          git config --local user.name ${{ env.GITHUB_NAME }}
           git add BOJ_ExpInflRate_down.csv JGB_rates.csv JRB_rates.csv
           git commit -m ":robot: CSV updated at:{{ env.CURRENT_DATETIME }}" || echo "No change to commit."
           git push -u --force-with-lease --force-if-includes origin build 
