@@ -46,4 +46,4 @@ jobs:
           destination_branch: "build"
           user_email: "github-action[bot]@users.noreply.github.com"
           user_name: "github-actions[bot]"
-          commit-message: "CSV updated at:{{ env.CURRENT_DATETIME }}"
+          commit_message: "CSV updated at:{{ env.CURRENT_DATETIME }}"
