@@ -36,15 +36,41 @@ jobs:
         run: |
           echo "CURRENT_DATETIME"=$(date)>>$GITHUB_ENV
           
-      - name: Commit CSV
+      - name: Commit CSV 1
         uses: dmnemec/copy_file_to_another_repo_action@v1.1.1
         env: 
           API_TOKEN_GITHUB: ${{ steps.app-token.outputs.token }}
         with:
           source_file: 
-            "BOJ_ExpInflRate_down.csv JGB_rates.csv JRB_rates.csv"
+            "BOJ_ExpInflRate_down.csv"
           destination_repo: "Ashihara-Y/VFMcalcProj"
           destination_branch: "build"
           user_email: "github-action[bot]@users.noreply.github.com"
           user_name: "github-actions[bot]"
-          commit_message: "CSV updated at:{{ env.CURRENT_DATETIME }}"
+          commit_message: "CSV_1 updated at:{{ env.CURRENT_DATETIME }}"
+
+      - name: Commit CSV 2
+        uses: dmnemec/copy_file_to_another_repo_action@v1.1.1
+        env: 
+          API_TOKEN_GITHUB: ${{ steps.app-token.outputs.token }}
+        with:
+          source_file: 
+            "JGB_rates.csv"
+          destination_repo: "Ashihara-Y/VFMcalcProj"
+          destination_branch: "build"
+          user_email: "github-action[bot]@users.noreply.github.com"
+          user_name: "github-actions[bot]"
+          commit_message: "CSV_2 updated at:{{ env.CURRENT_DATETIME }}"
+
+      - name: Commit CSV 3
+        uses: dmnemec/copy_file_to_another_repo_action@v1.1.1
+        env: 
+          API_TOKEN_GITHUB: ${{ steps.app-token.outputs.token }}
+        with:
+          source_file: 
+            "JRB_rates.csv"
+          destination_repo: "Ashihara-Y/VFMcalcProj"
+          destination_branch: "build"
+          user_email: "github-action[bot]@users.noreply.github.com"
+          user_name: "github-actions[bot]"
+          commit_message: "CSV_3 updated at:{{ env.CURRENT_DATETIME }}"
