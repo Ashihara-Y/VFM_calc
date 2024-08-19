@@ -42,7 +42,7 @@ jobs:
           API_TOKEN_GITHUB: ${{ steps.app-token.outputs.token }}
         with:
           source_file: "BOJ_ExpInflRate_down.csv, JGB_rates.csv, JRB_rates.csv"
-          destination_repo: "Ashihara/VFMcalcProj"
+          destination_repo: "Ashihara-Y/VFMcalcProj"
           destination_branch: "build"
           user_email: "github-action[bot]@users.noreply.github.com"
           user_name: "github-actions[bot]"
