@@ -34,7 +34,7 @@ jobs:
      
       - name: current_datetime
         run: |
-          "CURRENT_DATETIME"=$(date)>>$GITHUB_ENV
+          echo "CURRENT_DATETIME"=$(date)>>$GITHUB_ENV
           
       - name: Commit CSV
         uses: dmnemec/copy_file_to_another_repo_action@v1.1.1
