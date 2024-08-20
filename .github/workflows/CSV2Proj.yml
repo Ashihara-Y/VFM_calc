@@ -47,7 +47,7 @@ jobs:
           destination_branch: "build"
           user_email: "github-action[bot]@users.noreply.github.com"
           user_name: "github-actions[bot]"
-          commit_message: "CSV_1 updated at:{{ env.CURRENT_DATETIME }}"
+          commit_message: "CSV_1 updated at:${{ env.CURRENT_DATETIME }}"
 
       - name: Commit CSV 2
         uses: dmnemec/copy_file_to_another_repo_action@v1.1.1
@@ -60,7 +60,7 @@ jobs:
           destination_branch: "build"
           user_email: "github-action[bot]@users.noreply.github.com"
           user_name: "github-actions[bot]"
-          commit_message: "CSV_2 updated at:{{ env.CURRENT_DATETIME }}"
+          commit_message: "CSV_2 updated at:${{ env.CURRENT_DATETIME }}"
 
       - name: Commit CSV 3
         uses: dmnemec/copy_file_to_another_repo_action@v1.1.1
@@ -73,4 +73,4 @@ jobs:
           destination_branch: "build"
           user_email: "github-action[bot]@users.noreply.github.com"
           user_name: "github-actions[bot]"
-          commit_message: "CSV_3 updated at:{{ env.CURRENT_DATETIME }}"
+          commit_message: "CSV_3 updated at:${{ env.CURRENT_DATETIME }}"
