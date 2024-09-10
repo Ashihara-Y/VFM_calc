@@ -1,12 +1,7 @@
 name: CSV2Proj
 on:
-  push:
-    branches: 
-      - main
-    paths:
-      - BOJ_ExpInflRate_down.csv
-      - JGB_rates.csv
-      - JRB_rates.csv
+  schedule:
+    - cron: "0 18 * * 5"
 
   workflow_dispatch:
 
