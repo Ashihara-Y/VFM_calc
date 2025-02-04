@@ -30,12 +30,12 @@ def JGB_rates_conv():
     JGB_rates = JGB_rates.set_index('基準日')
     JGB_rates.replace('-', np.nan, inplace=True)
 
-    JGB_rate_5_30 = JGB_rates[['5年', '10年', '15年', '20年', '25年', '30年']].dropna()
-    JGB_rate_5_30 = JGB_rate_5_30.astype(float, errors='raise')
+    JGB_rate_1_30 = JGB_rates[['1年', '2年', '3年', '4年', '5年', '10年', '15年', '20年', '25年', '30年']].dropna()
+    JGB_rate_1_30 = JGB_rate_1_30.astype(float, errors='raise')
 
-    JGB_rate_5_30_12M_M = JGB_rate_5_30.resample('ME').mean().tail(12).mean()
+    JGB_rate_1_30_12M_M = JGB_rate_1_30.resample('ME').mean().tail(12).mean()
 
-    JGB_rate_5_30_12M_M.to_csv('JGB_rates.csv', sep='\t', encoding='utf-8', mode='w', header=False)
+    JGB_rate_1_30_12M_M.to_csv('JGB_rates.csv', sep='\t', encoding='utf-8', mode='w', header=False)
 
 if __name__ == '__main__':
     JGB_rates_conv()
