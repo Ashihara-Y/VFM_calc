@@ -43,7 +43,7 @@ def JGB_rates_conv():
     r1_fl_str = str(pchip_interp(proj_years))
     r1 = Decimal(r1_fl_str).quantize(Decimal('0.000001'), rounding=ROUND_HALF_UP)
 
-    JGB_rate_1_30_12M_M.to_csv('JGB_rates.csv', sep='\t', encoding='utf-8', mode='w', header=False)
+    JGB_rate_1_30_12M_M.to_csv('JGB_rates2.csv', sep='\t', encoding='utf-8', mode='w', header=False)
 
 if __name__ == '__main__':
     JGB_rates_conv()
