@@ -71,3 +71,16 @@ jobs:
           user_email: "github-action[bot]@users.noreply.github.com"
           user_name: "github-actions[bot]"
           commit_message: "CSV_3 updated at:${{ env.CURRENT_DATETIME }}"
+
+      - name: Commit CSV 4
+        uses: dmnemec/copy_file_to_another_repo_action@v1.1.1
+        env: 
+          API_TOKEN_GITHUB: ${{ steps.app-token.outputs.token }}
+        with:
+          source_file: 
+            "JGB_rates_PCHIP.csv"
+          destination_repo: "Ashihara-Y/VFMcalcProj"
+          destination_branch: "build"
+          user_email: "github-action[bot]@users.noreply.github.com"
+          user_name: "github-actions[bot]"
+          commit_message: "CSV_4 updated at:${{ env.CURRENT_DATETIME }}"
