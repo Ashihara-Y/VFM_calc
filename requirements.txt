@@ -9,4 +9,4 @@ tinydb
 numpy
 requests
 scipy
-
+decimal
