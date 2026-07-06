@@ -44,7 +44,7 @@ def JGB_rates_conv_PCHIP():
     pchip_interp = PchipInterpolator(col_array, val_array)
 
     PCHIP_rates = [str(pchip_interp(x)) for x in proj_years_array2]
-    PCHI_rates_dic = {str(x) + "年" : y for x,y in zip(proj_years_array2, PCHIP_rates)}
+    PCHI_rates_dic = {str(x) : y for x,y in zip(proj_years_array2, PCHIP_rates)}
     PCHIP_rates_df = pd.DataFrame(PCHI_rates_dic.items(), columns=['年限', '利回り'])
     PCHIP_rates_df.to_csv('JGB_rates_PCHIP.csv', sep=',', encoding='utf-8', mode='w', header=True, index=False)
     
