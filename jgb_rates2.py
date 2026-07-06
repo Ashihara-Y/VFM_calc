@@ -3,7 +3,7 @@ import pandas as pd
 from datetime import datetime
 import numpy as np
 from scipy.interpolate import PchipInterpolator
-from decimal import *
+#from decimal import *
 
 def JGB_rates_conv_PCHIP():
     JGB_rates = pd.read_csv('https://www.mof.go.jp/jgbs/reference/interest_rate/data/jgbcm_all.csv', encoding='Shift-JIS', header=1)
