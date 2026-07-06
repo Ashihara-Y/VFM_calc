@@ -37,7 +37,7 @@ def JGB_rates_conv_PCHIP():
     JGB_rate_1_30_12M_M = JGB_rate_1_30.resample('ME').mean().tail(12).mean()
 
     df_reset = JGB_rate_1_30_12M_M.reset_index()
-    proj_years_array2 = list(range(10,31,1))
+    proj_years_array2 = list(range(1,31,1))
 
     val_array = df_reset.iloc[0:,1].to_numpy()
     col_array = df_reset.iloc[0:,0].apply(lambda x: x[:-1]).astype(int).to_numpy()
