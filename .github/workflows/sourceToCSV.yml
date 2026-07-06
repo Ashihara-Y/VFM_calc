@@ -70,6 +70,10 @@ jobs:
       - name: Run jgb_rates
         run: python jgb_rates.py
 
+      # Runs python code for getting JGB rates 2
+      - name: Run jgb_rates2
+        run: python jgb_rates2.py
+
       # Runs python code for getting JRB rates
       - name: Run jrb_rates
         run: python jrb_rates.py
