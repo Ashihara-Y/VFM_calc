@@ -1,5 +1,5 @@
 from playwright.sync_api import Playwright, sync_playwright, expect
-
+import codecs
 
 def run(playwright: Playwright) -> None:
     browser = playwright.chromium.launch(headless=True)
@@ -24,6 +24,13 @@ def run(playwright: Playwright) -> None:
     download = download_info.value
     # Save downloaded file in current directory under name "BOJ_ExpInflRate_down.csv"
     download.save_as("./BOJ_ExpInflRate_down.csv")
+
+    stream = download.create_read_stream()
+
+# 3. 最初から「UTF-8」としてファイルに書き込む
+    with open("./BOJ_ExpInflRate_down2.csv", "w", encoding="utf-8", newline="") as f_out:
+        reader = codecs.getreader("cp932")(stream)
+        f_out.write(reader.read())
 
     page2.close()
     page1.close()
