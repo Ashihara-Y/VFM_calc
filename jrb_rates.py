@@ -25,10 +25,10 @@ def main():
     df = df.map(lambda x: x.replace("%", ""))
     df.replace("-", np.nan, inplace=True)
     df = df.astype(np.float64, errors='raise')
-    df.rename(columns={'なし':'0','１年以内':'1','１年を超え \n２年以内':'2','２年を超え \n３年以内':'3','３年を超え \n４年以内':'4','４年を超え \n５年以内':'5'}, inplace=True)
+    df.rename(columns={'なし':'0','１年以内':'1','１年を超え\n２年以内':'2','２年を超え\n３年以内':'3','３年を超え\n４年以内':'4','４年を超え\n５年以内':'5'}, inplace=True)
 
     df.to_csv('JRB_rates.csv', sep='\t', encoding='utf-8', mode='w', header=False)
-    df.to_csv('JRB_rates2.csv', sep=',', encoding='utf-8', mode='w', header=True, index=False)
+    df.to_csv('JRB_rates2.csv', sep=',', encoding='utf-8', mode='w', header=True, index=True)
 
 
 if __name__ == '__main__':
