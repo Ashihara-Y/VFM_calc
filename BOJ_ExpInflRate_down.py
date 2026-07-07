@@ -48,7 +48,7 @@ def run(playwright: Playwright) -> None:
     
     # 4. UTF-8に変換して新しいファイルに保存
     output_path = "./BOJ_ExpInflRate_utf8.csv"
-    df.to_csv(output_path, index=True, encoding='utf-8')
+    df.to_csv(output_path, index=True, header=False, encoding='utf-8')
 
     page2.close()
     page1.close()
