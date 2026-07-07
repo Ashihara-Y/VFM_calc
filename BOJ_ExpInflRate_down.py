@@ -25,12 +25,12 @@ def run(playwright: Playwright) -> None:
     # Save downloaded file in current directory under name "BOJ_ExpInflRate_down.csv"
     download.save_as("./BOJ_ExpInflRate_down.csv")
 
-    stream = download.create_read_stream()
+    #stream = download.create_read_stream()
 
-# 3. 最初から「UTF-8」としてファイルに書き込む
-    with open("./BOJ_ExpInflRate_down2.csv", "w", encoding="utf-8", newline="") as f_out:
-        reader = codecs.getreader("cp932")(stream)
-        f_out.write(reader.read())
+# 3. 最初から「UTF-8」としてファイルに書き込む(Python版では不可)
+    #with open("./BOJ_ExpInflRate_down2.csv", "w", encoding="utf-8", newline="") as f_out:
+    #    reader = codecs.getreader("cp932")(stream)
+    #    f_out.write(reader.read())
 
     page2.close()
     page1.close()
