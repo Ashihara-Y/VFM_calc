@@ -1,5 +1,6 @@
 from playwright.sync_api import Playwright, sync_playwright, expect
 import codecs
+import pandas as pd
 
 def run(playwright: Playwright) -> None:
     browser = playwright.chromium.launch(headless=True)
@@ -23,14 +24,26 @@ def run(playwright: Playwright) -> None:
         page2.locator('td > a').click()
     download = download_info.value
     # Save downloaded file in current directory under name "BOJ_ExpInflRate_down.csv"
-    download.save_as("./BOJ_ExpInflRate_down.csv")
+    file_path = "./BOJ_ExpInflRate_down.csv"
+    download.save_as(file_path)
 
-    #stream = download.create_read_stream()
+    # 2. PandasでDataFrameに読み込み（Shift_JISを指定）
+    # ※日銀短観のCSVは上部に英語・日本語のタイトル行があるため、必要に応じて skiprows を調整してください
+    df = pd.read_csv(file_path, encoding='shift_jis', skiprows=2)
 
-# 3. 最初から「UTF-8」としてファイルに書き込む(Python版では不可)
-    #with open("./BOJ_ExpInflRate_down2.csv", "w", encoding="utf-8", newline="") as f_out:
-    #    reader = codecs.getreader("cp932")(stream)
-    #    f_out.write(reader.read())
+    # 3. DataFrameの編集（例：列名の変更）
+    # 実際のCSV構造に合わせて変更してください
+    df = df.rename(columns={
+    '物価全般の見通し/５年後/企業の物価見通しの平均/全規模/全産業': '全規模/全産業',
+    '物価全般の見通し/５年後/企業の物価見通しの平均/全規模/_建設': '全規模/建設',
+    '物価全般の見通し/５年後/企業の物価見通しの平均/全規模/_不動産・物品賃貸': '全規模/不動産・物品賃貸',
+    '物価全般の見通し/５年後/企業の物価見通しの平均/全規模/__不動産': '全規模/不動産',
+    '物価全般の見通し/５年後/企業の物価見通しの平均/全規模/_対事業所サービス': '全規模/対事業所サービス'
+    })
+
+    # 4. UTF-8に変換して新しいファイル（または同じファイル名）に保存
+    output_path = "./BOJ_ExpInflRate_utf8.csv"
+    df.to_csv(output_path, index=True, encoding='utf-8')
 
     page2.close()
     page1.close()
