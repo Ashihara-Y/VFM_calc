@@ -29,7 +29,7 @@ def run(playwright: Playwright) -> None:
 
     # 2. PandasでDataFrameに読み込み（Shift_JISを指定）
     # ※日銀短観のCSVは上部に英語・日本語のタイトル行があるため、必要に応じて skiprows を調整してください
-    df = pd.read_csv(file_path, encoding='shift_jis', skiprows=2)
+    df = pd.read_csv(file_path, encoding='shift_jis', skiprows=1)
 
     # 3. DataFrameの編集（例：列名の変更）
     # 実際のCSV構造に合わせて変更してください
