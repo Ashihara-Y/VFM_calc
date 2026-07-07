@@ -44,7 +44,7 @@ def run(playwright: Playwright) -> None:
     df['系列名称'] = pd.to_datetime(df['系列名称'], format='%Y/%m').dt.strftime('%Y年%m月')
 
     num = len(df['全規模/全産業'].dropna())
-    df = df.iloc(num-1)
+    df = df.iloc[num-1]
     
     # 4. UTF-8に変換して新しいファイルに保存
     output_path = "./BOJ_ExpInflRate_utf8.csv"
