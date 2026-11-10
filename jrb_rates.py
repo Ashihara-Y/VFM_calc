@@ -32,7 +32,7 @@ def main():
     ]
     df = df[target_cols]
 
-    # 1. 文字列化・パーセント記号（半角・全角）の除去・前後空白のトリム
+    # 1. 文字列化・パーセント記号（半角）の除去
     df = df.map(lambda x: str(x).replace("%", ""))
 
     # 2. 列ごとに pd.to_numeric(..., errors='coerce') を適用して float64 に変換
