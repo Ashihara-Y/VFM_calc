@@ -1,86 +1,47 @@
 name: CSV2Proj
+
 on:
   schedule:
     - cron: "0 18 * * 5"
-
   workflow_dispatch:
 
 permissions:
   contents: write
   pull-requests: write
 
-env:
-  GITHUB_MAIL: yoshihiro.ashihara@gmail.com
-  GITHUB_NAME: Ashihara-Y
-  REMOTE_REPO_URL: https://github.com/Ashihara-Y/VFMcalcProj.git
-
 jobs:
   copy-CSV:
-    runs-on: ubuntu-latest
+    # OSの自動移行による環境変化を防ぐため 24.04 を明示指定
+    runs-on: ubuntu-24.04
+
     steps:
-      - uses: actions/create-github-app-token@v1
+      - name: Generate GitHub App Token
+        uses: actions/create-github-app-token@v2
         id: app-token
         with:
           app-id: ${{ vars.APP_ID }}
           private-key: ${{ secrets.PRIVATE_KEY }}
           owner: ${{ github.repository_owner }}
-          
 
-      - name: check out code of current repo
-        uses: actions/checkout@v4
-     
-      - name: current_datetime
+      - name: Check out code of current repo
+        uses: actions/checkout@v5
+
+      - name: Copy CSVs and Push to VFMcalcProj
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
-          echo "CURRENT_DATETIME"=$(date)>>$GITHUB_ENV
+          CURRENT_DATETIME=$(date '+%Y-%m-%d %H:%M:%S %Z')
           
-      - name: Commit CSV 1
-        uses: dmnemec/copy_file_to_another_repo_action@v1.1.1
-        env: 
-          API_TOKEN_GITHUB: ${{ steps.app-token.outputs.token }}
-        with:
-          source_file: 
-            "BOJ_ExpInflRate_down.csv"
-          destination_repo: "Ashihara-Y/VFMcalcProj"
-          destination_branch: "build"
-          user_email: "github-action[bot]@users.noreply.github.com"
-          user_name: "github-actions[bot]"
-          commit_message: "CSV_1 updated at:${{ env.CURRENT_DATETIME }}"
-
-      - name: Commit CSV 2
-        uses: dmnemec/copy_file_to_another_repo_action@v1.1.1
-        env: 
-          API_TOKEN_GITHUB: ${{ steps.app-token.outputs.token }}
-        with:
-          source_file: 
-            "JGB_rates.csv"
-          destination_repo: "Ashihara-Y/VFMcalcProj"
-          destination_branch: "build"
-          user_email: "github-action[bot]@users.noreply.github.com"
-          user_name: "github-actions[bot]"
-          commit_message: "CSV_2 updated at:${{ env.CURRENT_DATETIME }}"
-
-      - name: Commit CSV 3
-        uses: dmnemec/copy_file_to_another_repo_action@v1.1.1
-        env: 
-          API_TOKEN_GITHUB: ${{ steps.app-token.outputs.token }}
-        with:
-          source_file: 
-            "JRB_rates.csv"
-          destination_repo: "Ashihara-Y/VFMcalcProj"
-          destination_branch: "build"
-          user_email: "github-action[bot]@users.noreply.github.com"
-          user_name: "github-actions[bot]"
-          commit_message: "CSV_3 updated at:${{ env.CURRENT_DATETIME }}"
-
-      - name: Commit CSV 4
-        uses: dmnemec/copy_file_to_another_repo_action@v1.1.1
-        env: 
-          API_TOKEN_GITHUB: ${{ steps.app-token.outputs.token }}
-        with:
-          source_file: 
-            "JGB_rates_PCHIP.csv"
-          destination_repo: "Ashihara-Y/VFMcalcProj"
-          destination_branch: "build"
-          user_email: "github-action[bot]@users.noreply.github.com"
-          user_name: "github-actions[bot]"
-          commit_message: "CSV_4 updated at:${{ env.CURRENT_DATETIME }}"
+          # 送り先リポジトリ（VFMcalcProj）の build ブランチを浅くクローン
+          git clone --depth 1 --branch build "https://x-access-token:${GH_TOKEN}@github.com/Ashihara-Y/VFMcalcProj.git" target_repo
+          
+          # 4つのCSVファイルを一括コピー
+          cp BOJ_ExpInflRate_down.csv JGB_rates.csv JRB_rates.csv JGB_rates_PCHIP.csv target_repo/
+          
+          # 送り先リポジトリ内でコミット＆プッシュ（差分がある時のみ実行）
+          cd target_repo
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          
+          git add BOJ_ExpInflRate_down.csv JGB_rates.csv JRB_rates.csv JGB_rates_PCHIP.csv
+          git diff --staged --quiet || (git commit -m "CSVs updated at: ${CURRENT_DATETIME}" && git push origin build)
