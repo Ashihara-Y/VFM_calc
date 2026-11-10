@@ -33,7 +33,7 @@ def main():
     df = df[target_cols]
 
     # 1. 文字列化・パーセント記号（半角・全角）の除去・前後空白のトリム
-    df = df.map(lambda x: str(x).replace("%", "").replace("％", "").strip() if pd.notna(x) else x)
+    df = df.map(lambda x: str(x).replace("%", ""))
 
     # 2. 列ごとに pd.to_numeric(..., errors='coerce') を適用して float64 に変換
     #    ※ "-" や "－"、空文字などは自動的に np.nan (NaN) になり、確実に float64 型になります
