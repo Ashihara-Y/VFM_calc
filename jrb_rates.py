@@ -32,15 +32,16 @@ def main():
     ]
     df = df[target_cols]
 
-# 1. "%" を消し、ついでにセル内の余分なスペース（半角/全角）もすべて削除する
-    df = df.map(lambda x: str(x).replace("%", "").replace(" ", "").replace(" ", "") if pd.notna(x) else x)
-    
-    # 2. "-" だけでなく、変換不可能なゴミ文字列も含めて安全に NaN に落としながら float64 に変換する
-    df = df.replace("-", np.nan)
-    df = df.apply(pd.to_numeric).astype(np.float64)
-    
+    df_clean = df.astype(str).replace(r'[\s\xa0%]', '', regex=True)
+
+    # 2. ハイフンや空文字、"nan" という文字列を、明示的に本物の NaN (np.nan) に置き換える
+    df_clean = df_clean.replace(['-', '', 'nan', 'None'], np.nan)
+
+    # 3. 数値に強制変換（変換できない文字が残っていれば NaN になります）
+    df_numeric = df_clean.apply(pd.to_numeric, errors='coerce')
+
     # 3. inplace=True を使わず代入形式でカラム名をリネーム
-    df = df.rename(columns={
+    df = df_numeric.rename(columns={
         'なし': '0',
         '１年以内': '1',
         '１年を超え\n２年以内': '2',
