@@ -40,8 +40,22 @@ def main():
     # 3. 数値に強制変換（変換できない文字が残っていれば NaN になります）
     df_numeric = df_clean.apply(pd.to_numeric, errors='coerce')
 
+    # 3. 【ココを追加】小数点位置のバグを自動補正する関数
+    def fix_decimal_point(val):
+        if pd.isna(val):
+            return val
+    # 例: 3900.0 を 3.9 に戻す
+        if val >= 1000:
+            return val / 1000
+        #elif val >= 100:
+        #    return val / 100
+        return val
+
+    # データフレーム全体に補正を適用
+    df_final = df_numeric.map(fix_decimal_point)
+    
     # 3. inplace=True を使わず代入形式でカラム名をリネーム
-    df = df_numeric.rename(columns={
+    df = df_final.rename(columns={
         'なし': '0',
         '１年以内': '1',
         '１年を超え\n２年以内': '2',
