@@ -29,8 +29,8 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       # Setup python 3.13
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: '3.13' 
           cache: 'pip' # caching pip dependencies
@@ -44,28 +44,20 @@ jobs:
           echo "playwright-version=$(playwright --version | sed 's/ //g')" >> $GITHUB_OUTPUT
         shell: bash
 
-      - name: Restore Cache Playwright Browser
-        id: restore-cache-playwright-chromium
-        uses: actions/cache/restore@v4
+      - name: Cache Playwright Chromium Browser
+        id: cache-playwright-chromium
+        uses: actions/cache@v5
         with:
           path: /home/runner/.cache/ms-playwright
-          key: playwright-chromium-${{ steps.get-playwright-version.outputs.playwright-version }}
+          key: ${{ runner.os }}-playwright-chromium-${{ steps.get-playwright-version.outputs.playwright-version }}
 
-      - name: Install Playwright Browsers
-        run: playwright install chromium
-        if: ${{ steps.restore-cache-playwright-chromium.outputs.cache-hit != 'true' }}
+      - name: Install Playwright Chromium (Cache Miss)
+        if: ${{ steps.cache-playwright-chromium.outputs.cache-hit != 'true' }}
+        run: playwright install --with-deps chromium
 
-      - name: Save Cache – Playwright Browser
-        uses: actions/cache@v4
-        id: save-cache-playwright-chromium
-        with:
-          path: /home/runner/.cache/ms-playwright
-          key: ${{ steps.restore-cache-playwright-chromium.outputs.cache-primary-key }}
-
-      # Runs playwright for getting Chromium, etc
-      - name: Run playwright install
-        run: playwright install chromium
-
+      - name: Install Playwright OS Dependencies (Cache Hit)
+        if: ${{ steps.cache-playwright-chromium.outputs.cache-hit == 'true' }}
+        run: playwright install-deps chromium
       # Runs python code for getting JGB rates
       - name: Run jgb_rates
         run: python jgb_rates.py
