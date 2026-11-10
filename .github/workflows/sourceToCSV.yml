@@ -28,11 +28,11 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      # Setup python 3.12
+      # Setup python 3.13
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12' 
+          python-version: '3.13' 
           cache: 'pip' # caching pip dependencies
 
       - run: pip install -U pip
@@ -63,8 +63,8 @@ jobs:
           key: ${{ steps.restore-cache-playwright-chromium.outputs.cache-primary-key }}
 
       # Runs playwright for getting Chromium, etc
-      #- name: Run playwright install
-      #  run: playwright install chromium
+      - name: Run playwright install
+        run: playwright install chromium
 
       # Runs python code for getting JGB rates
       - name: Run jgb_rates
