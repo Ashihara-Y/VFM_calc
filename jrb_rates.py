@@ -32,13 +32,13 @@ def main():
     ]
     df = df[target_cols]
 
-    # 1. 文字列化・パーセント記号（半角）の除去
-    df = df.map(lambda x: str(x).replace("%", ""))
-
-    # 2. 列ごとに pd.to_numeric(..., errors='coerce') を適用して float64 に変換
-    #    ※ "-" や "－"、空文字などは自動的に np.nan (NaN) になり、確実に float64 型になります
-    df = df.apply(pd.to_numeric, errors='coerce').astype(np.float64)
-
+# 1. "%" を消し、ついでにセル内の余分なスペース（半角/全角）もすべて削除する
+    df = df.map(lambda x: str(x).replace("%", "").replace(" ", "").replace(" ", "") if pd.notna(x) else x)
+    
+    # 2. "-" だけでなく、変換不可能なゴミ文字列も含めて安全に NaN に落としながら float64 に変換する
+    df = df.replace("-", np.nan)
+    df = df.apply(pd.to_numeric).astype(np.float64)
+    
     # 3. inplace=True を使わず代入形式でカラム名をリネーム
     df = df.rename(columns={
         'なし': '0',
